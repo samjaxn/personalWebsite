@@ -1,12 +1,13 @@
-.App {
+.Title {
+  margin-top: 0;
+  vertical-align: center;
   text-align: center;
+  font-size: 30vmin;
+  color: #f0f0f0;
+  /*background-color: #555555;*/
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
+/*.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -20,3 +21,4 @@
 .App-link {
   color: #09d3ac;
 }
+*/
