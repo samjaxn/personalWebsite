@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
+import Main from './components/Main';
+import Container from '@material-ui/core/Container';
 
 function App() {
-  
-
   return (
-    <div>
-      <h1 className="Title">jacky</h1>
-    </div>
+    <Container maxWidth="xl" className="Container">
+      <Main />
+    </Container>
   );
 }
 

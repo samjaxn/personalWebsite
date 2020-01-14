@@ -1,10 +1,33 @@
+.Container {
+  font-family: 'Bahnschrift';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1em;
+  /* margin-top: 1em; */
+}
+
 .Title {
   margin-top: 0;
-  vertical-align: center;
   text-align: center;
-  font-size: 30vmin;
-  color: #f0f0f0;
-  /*background-color: #555555;*/
+  font-size: 25;
+  /* background-color: #555555; */
+}
+
+.Jacky {
+  
+}
+
+.menuItems {
+  text-align: right;
+  /* background-color: #555555; */
+}
+
+.Header {
+  /* background-color: #555555; */
+}
+
+.Logo {
+  font-size: 25vmin;
 }
 
 /*.App-header {
