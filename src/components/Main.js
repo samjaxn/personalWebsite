@@ -1,25 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Loading from './Loading';
 import Header from './Header';
+import Body from './Body';
 import anime from '../../node_modules/animejs/lib/anime';
 
-export class Main extends Component {
-    componentDidMount(){
-        /*anime({
-            targets: '.Title',
-            translateY: 250,
-            duration: 3000
-        });*/
-        return (<Loading />);
-    }
 
-    render() {
-        return (
-            <div>
-                <Header />
-            </div>
-        );
-    }
+export default function Main() {
+    return (
+        <div>
+            <Header />
+            <Body />
+        </div>
+    );
 }
-
-export default Main
