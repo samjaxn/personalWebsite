@@ -1,6 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import * as THREE from "three";
-import { Canvas, useFrame } from 'react-three-fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { Canvas, useFrame, useLoader } from 'react-three-fiber'
+import Main from './Main';
+import Jacky from './Jacky'
 
 const sceneSetup = () => {
     
@@ -47,13 +50,19 @@ export default function Body(props) {
     })
 
     return (
-        <div class="background">
-            <Canvas>
+        <div className="body">
+            <Canvas className="canvas"
+                camera={{ position: [0, 0, 1000], fov: 60 }}>
                 <ambientLight />
-                <pointLight position={[10, 10, 10]} />
-                <Box position={[-1.2, 0, 0]} />
-                <Box position={[1.2, 0, 0]} />
+                <pointLight position={[20, 1000, 20]} />
+                {/* <Box position={[0, 0, 0]} />
+                <Box position={[2, 0, 0]} />
+                <Box position={[-2, 0, 0]} /> */}
+                <Suspense fallback={null}>
+                    <Jacky />
+                </Suspense>
             </Canvas>
+            <Main />
             {/* <a href="https://github.com/drcmda/react-three-fiber" class="top-left" children="Github" />
             <a href="https://twitter.com/0xca0a" class="top-right" children="Twitter" />
             <a href="https://github.com/react-spring/react-spring" class="bottom-left" children="+ react-spring" />
