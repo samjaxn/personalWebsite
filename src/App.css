@@ -23,11 +23,12 @@
 
 .Header {
   padding: 20px;
+  padding-bottom: 0;
   /* background-color: #555555; */
 }
 
-.Logo {
-  font-size: 25vmin;
+.background {
+  background-color: #555555;
 }
 
 /*.App-header {
