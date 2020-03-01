@@ -52,14 +52,14 @@ export default function Body(props) {
     return (
         <div className="body">
             <Canvas className="canvas"
-                camera={{ position: [0, 0, 1000], fov: 60 }}>
+                camera={{ position: [0, 0, 1000], fov: 60, near: 0.1, far: 5000 }}>
                 <ambientLight />
                 <pointLight position={[20, 1000, 20]} />
                 {/* <Box position={[0, 0, 0]} />
                 <Box position={[2, 0, 0]} />
                 <Box position={[-2, 0, 0]} /> */}
                 <Suspense fallback={null}>
-                    <Jacky />
+                    <Jacky scale={[1, 1, 1]}/>
                 </Suspense>
             </Canvas>
             <Main />
