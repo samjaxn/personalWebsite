@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState, useCallback } from 'react'
 import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { Canvas, useFrame, useLoader } from 'react-three-fiber'
@@ -43,6 +43,11 @@ function Box(props) {
 }
 
 export default function Body(props) {
+    const [hovered, hover] = useState(false)
+    const [down, set] = useState(false)
+    const mouse = useRef([0,0])
+    const onMouseMove = useCallback(({ clientX: x, clientY: y}) => (mouse.current = [x - window.innerWidth / 2, y - window.innerHeight / 2]), [])
+
     useEffect(() => {
         sceneSetup()
         addCustomSceneObjects()
@@ -52,14 +57,17 @@ export default function Body(props) {
     return (
         <div className="body">
             <Canvas className="canvas"
-                camera={{ position: [0, 0, 1000], fov: 60, near: 0.1, far: 5000 }}>
+                camera={{ position: [0, 0, 10], fov: 60, near: 0.1, far: 5000 }}
+                onMouseMove={onMouseMove}
+                onMouseUp={() => set(false)}
+                onMouseDown={() => set(true)}>
                 <ambientLight />
-                <pointLight position={[20, 1000, 20]} />
+                <pointLight position={[0, 100, 10]} />
                 {/* <Box position={[0, 0, 0]} />
                 <Box position={[2, 0, 0]} />
                 <Box position={[-2, 0, 0]} /> */}
                 <Suspense fallback={null}>
-                    <Jacky scale={[1, 1, 1]}/>
+                    <Jacky mouse={mouse}/>
                 </Suspense>
             </Canvas>
             <Main />
