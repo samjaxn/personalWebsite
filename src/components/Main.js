@@ -8,7 +8,7 @@ export default function Main() {
     return (
         <div className="Main">
             <Container maxWidth="xl" className="Container">
-                <Header />
+                {/* <Header /> */}
             </Container>
         </div>
     );

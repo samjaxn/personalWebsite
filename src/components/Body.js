@@ -1,7 +1,7 @@
-import React, { Suspense, useEffect, useRef, useState, useCallback } from 'react'
+import React, { Suspense, useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { Canvas, useFrame, useLoader } from 'react-three-fiber'
+import { Canvas, useFrame, useLoader, useThree } from 'react-three-fiber'
 import Main from './Main';
 import Jacky from './Jacky'
 
@@ -47,6 +47,15 @@ export default function Body(props) {
     const [down, set] = useState(false)
     const mouse = useRef([0,0])
     const onMouseMove = useCallback(({ clientX: x, clientY: y}) => (mouse.current = [x - window.innerWidth / 2, y - window.innerHeight / 2]), [])
+    const { size, viewport } = useThree()
+    const positionZ = () => {
+        if(viewport.width < 9){
+            return 6
+        }
+        else{
+            return 5
+        }
+    }
 
     useEffect(() => {
         sceneSetup()
@@ -57,17 +66,17 @@ export default function Body(props) {
     return (
         <div className="body">
             <Canvas className="canvas"
-                camera={{ position: [0, 0, 10], fov: 60, near: 0.1, far: 5000 }}
+                camera={{ position: [0, 0, 5], fov: 60, near: 0.1, far: 5000 }}
                 onMouseMove={onMouseMove}
                 onMouseUp={() => set(false)}
                 onMouseDown={() => set(true)}>
-                <ambientLight />
-                <pointLight position={[0, 100, 10]} />
+                {/* <ambientLight /> */}
+                <rectAreaLight color={0xffffff} intensity={10} width={100} height={2} position={[0, 3.5, 1.5]} onUpdate={self => self.lookAt(new THREE.Vector3(0, 0, 0))} />
                 {/* <Box position={[0, 0, 0]} />
                 <Box position={[2, 0, 0]} />
                 <Box position={[-2, 0, 0]} /> */}
                 <Suspense fallback={null}>
-                    <Jacky mouse={mouse}/>
+                    <Jacky mouse={mouse} />
                 </Suspense>
             </Canvas>
             <Main />
