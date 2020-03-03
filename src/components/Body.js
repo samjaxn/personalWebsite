@@ -42,20 +42,74 @@ function Box(props) {
     )
 }
 
+function Sphere(props){
+    const sphere = useRef()
+
+    const [hovered, setHover] = useState(false)
+    const [active, setActive] = useState(false)
+
+    useFrame(() => (sphere.current.rotation.y += 0.01))
+
+    return(
+        <mesh
+            {...props}
+            ref={sphere}
+            onClick={e => setActive(!active)}
+            onPointerOver={e => setHover(true)}
+            onPointerOut={e => setHover(false)}>
+            <sphereGeometry attach="geometry" args={[2, 16, 16]} />
+            <meshStandardMaterial attach="material" color={hovered ? '#555555' : 'white'} roughness={0} metalness={0} wireframe={true}/>
+        </mesh>
+    )
+}
+
+function Circle({radius, ...props}){
+    const segmentCount = 64
+    const vertices = []
+
+    for (var i = 0; i <= segmentCount; i++) {
+        var theta = (i / segmentCount) * Math.PI * 2
+        vertices.push(
+            new THREE.Vector3(Math.cos(theta) * radius, Math.sin(theta) * radius, 0)
+        )            
+    }
+
+    return(
+        <line {...props}>
+            <geometry attach="geometry" vertices={vertices} />
+            <lineBasicMaterial attach="material" color={'#FFFFFF'} />
+        </line>
+    )
+}
+
+function CameraUpdate(){
+    const {size, viewport, aspect, camera} = useThree()
+
+    if(aspect < 1.4){
+        camera.position.z = (-14*aspect + 24)
+    }
+    else{
+        camera.position.z = 5
+    }
+
+    return null
+}
+
 export default function Body(props) {
     const [hovered, hover] = useState(false)
-    const [down, set] = useState(false)
+    const [mouseDown, setMouse] = useState(false)
+    const [touchDown, setTouch] = useState(false)
     const mouse = useRef([0,0])
     const onMouseMove = useCallback(({ clientX: x, clientY: y}) => (mouse.current = [x - window.innerWidth / 2, y - window.innerHeight / 2]), [])
-    const { size, viewport } = useThree()
-    const positionZ = () => {
-        if(viewport.width < 9){
-            return 6
-        }
-        else{
-            return 5
-        }
+    const onTouchMove = useCallback((e) => {
+        var touch = e.touches[0];
+        mouse.current = [touch.pageX - window.innerWidth / 2, touch.pageY - window.innerHeight / 2]
+    }, [])
+    const onTouchEnd = () => {
+        setTouch(false)
+        mouse.current = [0,0]
     }
+
 
     useEffect(() => {
         sceneSetup()
@@ -68,18 +122,25 @@ export default function Body(props) {
             <Canvas className="canvas"
                 camera={{ position: [0, 0, 5], fov: 60, near: 0.1, far: 5000 }}
                 onMouseMove={onMouseMove}
-                onMouseUp={() => set(false)}
-                onMouseDown={() => set(true)}>
+                onTouchMove={onTouchMove}
+                onMouseUp={() => setMouse(false)}
+                onMouseDown={() => setMouse(true)}
+                onTouchStart={() => setTouch(true)}
+                onTouchEnd={onTouchEnd}>
                 {/* <ambientLight /> */}
                 <rectAreaLight color={0xffffff} intensity={10} width={100} height={2} position={[0, 3.5, 1.5]} onUpdate={self => self.lookAt(new THREE.Vector3(0, 0, 0))} />
                 {/* <Box position={[0, 0, 0]} />
                 <Box position={[2, 0, 0]} />
                 <Box position={[-2, 0, 0]} /> */}
                 <Suspense fallback={null}>
-                    <Jacky mouse={mouse} />
+                    <Jacky mouse={mouse}/>
                 </Suspense>
+                {/* <Circle radius={1.5} position={[0, 0, -1]} />
+                <Circle radius={2} position={[0, 0, -1]} />
+                <Circle radius={2.5} position={[0, 0, -1]} /> */}
+                <CameraUpdate />
             </Canvas>
-            <Main />
+            {/* <Main /> */}
             {/* <a href="https://github.com/drcmda/react-three-fiber" class="top-left" children="Github" />
             <a href="https://twitter.com/0xca0a" class="top-right" children="Twitter" />
             <a href="https://github.com/react-spring/react-spring" class="bottom-left" children="+ react-spring" />

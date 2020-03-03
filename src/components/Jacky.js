@@ -9,25 +9,25 @@ export default function Model({mouse, ...props}) {
   const group = useRef()
   const { nodes, materials, animations } = useLoader(GLTFLoader, '/jacky.glb')
 
-  const { size, viewport } = useThree()
+  const { size, viewport, aspect } = useThree()
   const aspectX = size.width/ viewport.width
   const aspectY = size.height/ viewport.height
 
   const [hovered, setHover] = useState(false)
-  const [active, setActive] = useState(false)
+  const [click, setActive] = useState(false)
   const { ...spring } = useSpring({
-    scale: hovered ? [1.2, 1.2, 1.2] : [1, 1, 1],
+    // scale: hovered ? [1.2, 1.2, 1.2] : [1, 1, 1],
     config: { mass: 10, tension: 1000, friction: 300, precision: 0.00001 }
   })
 
   // Rotate mesh every frame, this is outside of React without overhead
   useFrame(() => {
     if(group.current){
-      group.current.position.x = lerp(group.current.position.x, mouse.current[0] / aspectX / 35, 0.1)
-      group.current.rotation.x = lerp(group.current.rotation.x, 0 + mouse.current[1] / aspectX / 15, 0.1)
-      group.current.rotation.y = lerp(group.current.rotation.y, 0 + mouse.current[0] / aspectY / 40, 0.1)
-
-      active ? group.current.rotation.x = lerp(group.current.rotation.x, group.current.rotation.x, 0.1) : group.current.rotation.x = lerp(group.current.rotation.x,  group.current.rotation.x + THREE.Math.degToRad(360), 0.1)
+        group.current.position.x = lerp(group.current.position.x, mouse.current[0] / aspectX / 35, 0.1)
+        group.current.rotation.x = lerp(group.current.rotation.x, 0 + mouse.current[1] / aspectX / 15, 0.1)
+        group.current.rotation.y = lerp(group.current.rotation.y, 0 + mouse.current[0] / aspectY / 40, 0.1)
+        
+        click ? group.current.rotation.x = lerp(group.current.rotation.x, group.current.rotation.x, 0.1) : group.current.rotation.x = lerp(group.current.rotation.x,  group.current.rotation.x + THREE.Math.degToRad(360), 0.1)
     }
   })
 
@@ -39,7 +39,7 @@ export default function Model({mouse, ...props}) {
     {...props}
     onPointerOver={e => setHover(true)}
     onPointerOut={e => setHover(false)}
-    onClick={e => setActive(!active)}>
+    onClick={e => setActive(!click)}>
       <scene name="Root Scene">
         <group name="RootNode">
           <primitive object={nodes.CINEMA_4D_Editor} />
