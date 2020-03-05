@@ -82,6 +82,13 @@ function Circle({radius, ...props}){
     )
 }
 
+const Plane = ({...props}) => (
+    <mesh {...props} receiveShadow>
+        <planeBufferGeometry attach="geometry" args={[100,100]} />
+        <meshPhysicalMaterial attach="material" color="#0a0a0a" />
+    </mesh>
+)
+
 function CameraUpdate(){
     const {size, viewport, aspect, camera} = useThree()
 
@@ -121,6 +128,10 @@ export default function Body(props) {
         <div className="body">
             <Canvas className="canvas"
                 camera={{ position: [0, 0, 5], fov: 60, near: 0.1, far: 5000 }}
+                // onCreated={({ gl }) => { 
+                //     gl.shadowMap.enabled = true
+                //     gl.shadowMap.type = THREE.PCFSoftShadowMap
+                // }}
                 onMouseMove={onMouseMove}
                 onTouchMove={onTouchMove}
                 onMouseUp={() => setMouse(false)}
@@ -129,12 +140,14 @@ export default function Body(props) {
                 onTouchEnd={onTouchEnd}>
                 {/* <ambientLight /> */}
                 <rectAreaLight color={0xffffff} intensity={10} width={100} height={2} position={[0, 3.5, 1.5]} onUpdate={self => self.lookAt(new THREE.Vector3(0, 0, 0))} />
+                {/* <fog attach="fog" args={['black', 1, 10]} /> */}
                 {/* <Box position={[0, 0, 0]} />
                 <Box position={[2, 0, 0]} />
                 <Box position={[-2, 0, 0]} /> */}
                 <Suspense fallback={null}>
                     <Jacky mouse={mouse}/>
                 </Suspense>
+                {/* <Plane position={[0,0,-3]} /> */}
                 {/* <Circle radius={1.5} position={[0, 0, -1]} />
                 <Circle radius={2} position={[0, 0, -1]} />
                 <Circle radius={2.5} position={[0, 0, -1]} /> */}
