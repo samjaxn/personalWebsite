@@ -16,6 +16,10 @@
   
 }
 
+.instagram {
+  text-align: center;
+}
+
 .menuItems {
   text-align: right;
   /* background-color: #555555; */
@@ -47,6 +51,14 @@
   width: 100%;
   top: 0;
   left: 0;
+}
+
+.Footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 /*.App-header {

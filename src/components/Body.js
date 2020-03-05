@@ -153,7 +153,7 @@ export default function Body(props) {
                 <Circle radius={2.5} position={[0, 0, -1]} /> */}
                 <CameraUpdate />
             </Canvas>
-            {/* <Main /> */}
+            <Main />
             {/* <a href="https://github.com/drcmda/react-three-fiber" class="top-left" children="Github" />
             <a href="https://twitter.com/0xca0a" class="top-right" children="Twitter" />
             <a href="https://github.com/react-spring/react-spring" class="bottom-left" children="+ react-spring" />

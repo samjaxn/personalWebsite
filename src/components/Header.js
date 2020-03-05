@@ -6,11 +6,8 @@ const Header = () => {
     return (
         <div className="Header">
             <Grid container spacing={1} justify="space-around" alignItems="center">
-                <Grid item xs={8} className="Jacky">
-                    <h1>JACKY</h1>
-                </Grid>
-                <Grid item xs={4} className="menuItems">
-                    <h2>menu</h2>
+                <Grid item xs={12} className="instagram">
+                    {/* <h1>JACKY</h1> */}
                 </Grid>
             </Grid>
         </div>
