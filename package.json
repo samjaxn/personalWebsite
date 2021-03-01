@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0",
-    "three": "^0.113.2"
+    "three": "^0.125.0"
   }
 }
